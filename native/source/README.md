@@ -6,8 +6,10 @@ Source SHA-256: `a1ef241ff26bbc84d50bc0888c01c280d09f4f058cb05a27f2dc974bd5adf7d
 
 
 This directory is a migration staging area for `irodori.questdb`. The active native
-ABI shim lives in `src/lib.rs`; engine-specific connect/query/metadata behavior
-should move here as the connector runtime contract is wired into the desktop app.
+entrypoints live in `src/lib.rs`, shared ABI helpers live in `src/abi.rs`, and
+engine behavior lives in `src/stub.rs` or `src/driver.rs`. Engine-specific
+connect/query/metadata code should move from these snapshots into that behavior
+module as the connector runtime contract is wired into the desktop app.
 
 ## Migration Snapshots
 
