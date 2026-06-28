@@ -1,0 +1,66 @@
+{
+  "$schema": "https://irodori.dev/schemas/irodori.extension.schema.json",
+  "manifestVersion": 1,
+  "id": "irodori.questdb",
+  "name": "QuestDB Connector",
+  "version": "0.1.0",
+  "publisher": "irodori",
+  "description": "QuestDB Connector contributes the QuestDB database connector through the native connector ABI.",
+  "license": "MIT OR 0BSD",
+  "repository": "https://github.com/hjosugi/irodori-extension-questdb",
+  "apiVersion": "0.1",
+  "runtime": "native",
+  "entry": "dist/native",
+  "permissions": [
+    "connections:read",
+    "connections:write",
+    "queries:run",
+    "metadata:read",
+    "native",
+    "connectors"
+  ],
+  "contributes": {
+    "connectors": [
+      {
+        "id": "questdb.connector",
+        "engine": "questdb",
+        "label": "QuestDB",
+        "aliases": [
+          "questdb",
+          "QuestDB"
+        ],
+        "defaultPort": 8812,
+        "wire": "postgres",
+        "module": "questdb.driver",
+        "features": [
+          "metadata",
+          "sql",
+          "streaming"
+        ]
+      }
+    ]
+  },
+  "capabilities": {
+    "nativeModules": [
+      {
+        "id": "questdb.driver",
+        "path": "dist/native",
+        "platforms": [
+          "windowsX64",
+          "windowsArm64",
+          "macosX64",
+          "macosArm64",
+          "linuxX64",
+          "linuxArm64"
+        ]
+      }
+    ]
+  },
+  "dev": {
+    "watch": [
+      "src",
+      "connector.config.json",
+      "irodori.extension.json"
+    ]
+  }
+}

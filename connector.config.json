@@ -1,0 +1,60 @@
+{
+  "schemaVersion": 1,
+  "visibility": "public",
+  "extensionId": "irodori.questdb",
+  "connector": {
+    "id": "questdb.connector",
+    "engine": "questdb",
+    "label": "QuestDB",
+    "aliases": [
+      "questdb",
+      "QuestDB"
+    ],
+    "defaultPort": 8812,
+    "wire": "postgres",
+    "module": "questdb.driver",
+    "features": [
+      "metadata",
+      "sql",
+      "streaming"
+    ]
+  },
+  "runtime": {
+    "abi": "irodori.connector.native.v1",
+    "module": {
+      "id": "questdb.driver",
+      "path": "dist/native",
+      "platforms": [
+        "windowsX64",
+        "windowsArm64",
+        "macosX64",
+        "macosArm64",
+        "linuxX64",
+        "linuxArm64"
+      ]
+    },
+    "crate": "irodori_extension_questdb",
+    "entrypoints": [
+      "irodori_extension_abi_version",
+      "irodori_connector_engine_json",
+      "irodori_extension_manifest_json",
+      "irodori_connector_config_json",
+      "irodori_connector_call_json",
+      "irodori_connector_free_buffer"
+    ],
+    "supportedCalls": [
+      "health",
+      "describe",
+      "manifest",
+      "config"
+    ],
+    "driverLinked": false
+  },
+  "source": {
+    "marketplaceId": "irodori.questdb",
+    "repository": "https://github.com/hjosugi/irodori-extension-questdb",
+    "knowledgeEngineStatus": "wired",
+    "adapter": "db/postgres.rs",
+    "adapterSha256": "a1ef241ff26bbc84d50bc0888c01c280d09f4f058cb05a27f2dc974bd5adf7d9"
+  }
+}
