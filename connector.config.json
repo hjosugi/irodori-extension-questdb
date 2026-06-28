@@ -16,7 +16,13 @@
     "features": [
       "metadata",
       "sql",
-      "streaming"
+      "streaming",
+      "timeSeries",
+      "timeBuckets",
+      "latestValue",
+      "queryTemplates",
+      "visualization",
+      "asOfJoin"
     ],
     "connection": {
       "schemaVersion": 1,
@@ -672,5 +678,99 @@
       "questdb"
     ],
     "customDriverOptions": true
+  },
+  "experience": {
+    "schemaVersion": 1,
+    "domains": [
+      "timeSeries"
+    ],
+    "inspiredBy": [
+      "QuestDB Web Console",
+      "SAMPLE BY",
+      "LATEST ON",
+      "ASOF JOIN"
+    ],
+    "resultViews": [
+      "timeChart",
+      "table",
+      "heatmap"
+    ],
+    "objectTypes": [
+      "tables",
+      "designatedTimestamps",
+      "symbols",
+      "partitions",
+      "walTables"
+    ],
+    "workflows": [
+      {
+        "id": "time-sample-by",
+        "label": "Sample by window",
+        "description": "Aggregate timestamped rows into fixed windows.",
+        "resultView": "timeChart",
+        "templateIds": [
+          "time-questdb-sample-by"
+        ]
+      },
+      {
+        "id": "time-latest",
+        "label": "Latest per key",
+        "description": "Read the newest row per symbol or device.",
+        "resultView": "table",
+        "templateIds": [
+          "time-questdb-latest"
+        ]
+      },
+      {
+        "id": "time-asof-join",
+        "label": "As-of join",
+        "description": "Join event streams by nearest preceding timestamp.",
+        "resultView": "table",
+        "templateIds": [
+          "time-questdb-asof-join"
+        ]
+      }
+    ],
+    "queryTemplates": [
+      {
+        "id": "time-questdb-sample-by",
+        "label": "SAMPLE BY aggregate",
+        "language": "sql",
+        "description": "Downsample recent readings into one-minute buckets.",
+        "insertText": "SELECT timestamp, avg(value)\nFROM readings\nWHERE timestamp >= dateadd('h', -1, now())\nSAMPLE BY 1m ALIGN TO CALENDAR;",
+        "parameters": [],
+        "resultView": "timeChart"
+      },
+      {
+        "id": "time-questdb-latest",
+        "label": "LATEST ON per key",
+        "language": "sql",
+        "description": "Return the latest row for each sensor.",
+        "insertText": "SELECT *\nFROM readings\nLATEST ON timestamp PARTITION BY sensor_id;",
+        "parameters": [],
+        "resultView": "table"
+      },
+      {
+        "id": "time-questdb-asof-join",
+        "label": "ASOF JOIN",
+        "language": "sql",
+        "description": "Join two time-aligned event streams.",
+        "insertText": "SELECT *\nFROM trades t ASOF JOIN quotes q ON (symbol)\nWHERE t.timestamp >= dateadd('d', -1, now());",
+        "parameters": [],
+        "resultView": "table"
+      }
+    ],
+    "inspectorHints": [
+      {
+        "id": "time-designated",
+        "label": "Designated timestamp",
+        "description": "Highlight the designated timestamp column and partitioning choice."
+      },
+      {
+        "id": "time-symbol",
+        "label": "Symbol columns",
+        "description": "Show symbol columns as preferred group and partition keys."
+      }
+    ]
   }
 }

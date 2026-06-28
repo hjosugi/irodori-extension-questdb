@@ -34,6 +34,24 @@ The Rust code keeps native ABI exports in `src/lib.rs`, shared buffer/JSON helpe
 | `clientCertificate` | Client certificate / mTLS | `privateKey`, `privateKeyPassphrase` |
 | `customDriverOptions` | Custom driver options | `password`, `token`, `privateKey`, `privateKeyPassphrase` |
 
+## Experience Metadata
+
+- Domains: `timeSeries`
+- Result views: `timeChart`, `table`, `heatmap`
+- Inspired by: `QuestDB Web Console`, `SAMPLE BY`, `LATEST ON`, `ASOF JOIN`
+
+| Workflow | Result view | Templates |
+|---|---|---|
+| Sample by window | timeChart | time-questdb-sample-by |
+| Latest per key | table | time-questdb-latest |
+| As-of join | table | time-questdb-asof-join |
+
+| Template | Label | Language | Result view |
+|---|---|---|---|
+| `time-questdb-sample-by` | SAMPLE BY aggregate | `sql` | `timeChart` |
+| `time-questdb-latest` | LATEST ON per key | `sql` | `table` |
+| `time-questdb-asof-join` | ASOF JOIN | `sql` | `table` |
+
 ## ABI Calls
 
 The scaffold handles these JSON requests today:
